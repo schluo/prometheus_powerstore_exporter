@@ -1,66 +1,51 @@
-import datetime
-import json
-import requests
+import time
+import urllib3
+from prometheus_client import Gauge
 
-class PowerStore:
+from powerstore import PowerStore
 
-    # This class permit to connect of the PowerStore's API
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-    def __init__(self, hostname, user, password, perfstats_type):
-        self.hostname = hostname
-        self.user = user
-        self.password = password
-        self.perfstats_type = perfstats_type
 
-    def send_request_stats(self):
-        # send a request and get the result as dict
+class Exporter:
+    """
+    Representation of Prometheus metrics and loop to fetch and transform
+    powerstore metrics into Prometheus metrics.
+    """
 
-        try:
+    def __init__(self, polling_interval, hostname, user, password):
 
-            # try to get token
-            url = 'https://' + self.hostname + '/api/rest/cluster?select=name,state'
-            r = requests.get(url, verify=False, auth=(self.user, self.password))
+        self.polling_interval = polling_interval
 
-            # if DEBUG:
-            #    print(r, r.headers)
+        self.powerstore = PowerStore(hostname=hostname,
+                                     user=user,
+                                     password=password,
+                                     perfstats_type="appliance")
 
-            # read access token from returned header
-            powerstore_token = r.headers['DELL-EMC-TOKEN']
+        self.powerstore.send_request_stats()
+        self.powerstore.process_stats()
 
-        except Exception as err:
-            print(self.get_time() + ": Not able to get token: " + str(err))
-            exit(1)
+        self.values = []
+        for perf_key, perf_value in self.powerstore.last_stats.items():
+            self.values.append(Gauge(perf_key, perf_key))
 
-        try:
-            # try to get stats using token
-            url = 'https://' + self.hostname + '/api/rest/metrics/generate'
-            r = requests.post(url, verify=False, auth=(self.user, self.password),
-                              headers={"DELL-EMC-TOKEN": powerstore_token},
-                              json={"entity": "performance_metrics_by_" + self.perfstats_type, "entity_id": "A1",
-                                    "interval": "Five_Mins"})
+    def get_metrics_index(self, metric_name):
+        i = 0
+        for metric in self.values:
+            if metric._name == metric_name:
+                return i
+            i += 1
 
-            # if DEBUG:
-            #    print(r, r.headers)
+    def run_metrics_loop(self):
+        """Metrics fetching loop"""
 
-            # prepare return to analyse
-            self.stats = json.loads(r.content)
-
-            # if DEBUG:
-            #    print(r, r.content)
-
-        except Exception as err:
-            print(self.get_time() + ": Not able to get stats: " + str(err))
-            exit(1)
-
-    def process_stats(self):
-
-        try:
-            # just take last data set
-            self.last_stats = self.stats[-1]
-
-        except Exception as err:
-            print(self.get_time() + ": Error while generating result output: " + str(err))
-            exit(1)
-
-    def get_time(self):
-        return datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
+        while True:
+            self.powerstore.send_request_stats()
+            self.powerstore.process_stats()
+            for perf_key, perf_value in self.powerstore.last_stats.items():
+                try:
+                    print(perf_key, perf_value)
+                    self.values[self.get_metrics_index(perf_key)].set(perf_value)
+                except:
+                    self.values[self.get_metrics_index(perf_key)].set(-1)
+            time.sleep(self.polling_interval)
