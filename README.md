@@ -2,7 +2,7 @@
 
 Prometheus Exporter for Dell EMC PowerStore Systems  
 
-## Usage
+### Usage
     usage: powerstore_exporter.py [-h] -H HOSTNAME -u USERNAME -p PASSWORD -o PORT [-v] -i INTERVAL
 
     optional arguments:
@@ -14,13 +14,13 @@ Prometheus Exporter for Dell EMC PowerStore Systems
         -v, --verbose                       verbose logging
         -i INTERVAL, --interval INTERVAL    polling interval
 
-###Example
+### Example
     python3 powerstore_exporter.py -H 172.21.16.150 -u admin -p password -o 9877 -i 5
 
 
 ---
   
-###Copyright (c) 2022 Dell Technologies
+### Copyright (c) 2022 Dell Technologies
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
