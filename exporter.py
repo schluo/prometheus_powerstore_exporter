@@ -45,7 +45,6 @@ class Exporter:
             self.powerstore.process_stats()
             for perf_key, perf_value in self.powerstore.last_stats.items():
                 try:
-                    print(perf_key, perf_value)
                     self.values[self.get_metrics_index(perf_key)].set(perf_value)
                 except:
                     self.values[self.get_metrics_index(perf_key)].set(-1)
