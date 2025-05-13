@@ -2,7 +2,6 @@ import datetime
 import json
 import requests
 
-
 class PowerStore:
 
     # This class permit to connect of the PowerStore's API
