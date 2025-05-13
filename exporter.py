@@ -1,8 +1,7 @@
 import time
-
 import urllib3
-from prometheus_client import Gauge
 
+from prometheus_client import Gauge
 from powerstore import PowerStore
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
