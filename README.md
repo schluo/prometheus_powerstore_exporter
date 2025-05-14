@@ -13,9 +13,11 @@ Prometheus Exporter for Dell EMC PowerStore Systems
         -o PORT, --port PORT                exporter TCP Port
         -v, --verbose                       verbose logging
         -i INTERVAL, --interval INTERVAL    polling interval
+        -m METRIC, --metric METRIC          metrics type (e.g. performance_metrics_by_appliance, space_metrics_by_appliance, performance_metrics_by_file_system...'
+                            
 
 ### Example
-    python3 powerstore_exporter.py -H 172.21.16.150 -u admin -p password -o 9877 -i 5
+    python3 powerstore_exporter.py -H 172.21.16.150 -u admin -p password -o 9877 -i 5 -m performance_metrics_by_appliance
 
 
 ---
