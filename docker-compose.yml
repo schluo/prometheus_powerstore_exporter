@@ -1,0 +1,9 @@
+service:
+  powerstore_exporter:
+    image: schluo/powerstore_exporter:latest
+    container_name: powerstore_exporter
+    restart: unless-stopped
+    user: '1000'
+    ports:
+      - 9002:9006
+    environment:
