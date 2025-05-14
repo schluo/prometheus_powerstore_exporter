@@ -36,7 +36,7 @@ class PowerStore:
             url = 'https://' + self.hostname + '/api/rest/metrics/generate'
             r = requests.post(url, verify=False, auth=(self.user, self.password),
                               headers={"DELL-EMC-TOKEN": powerstore_token},
-                              json={"entity": "performance_metrics_by_" + self.perfstats_type, "entity_id": "A1",
+                              json={"entity": self.perfstats_type, "entity_id": "A1",
                                     "interval": "Five_Mins"})
 
             # if DEBUG:
