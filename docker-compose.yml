@@ -11,4 +11,4 @@ service:
       - USER=admin
       - PASSWORD=password
       - PORT=9006
-      - INTERVAL=10
+      - INTERVAL=20
