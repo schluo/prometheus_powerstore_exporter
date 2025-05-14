@@ -41,7 +41,10 @@ def get_argument():
                             type=int,
                             help='polling interval',
                             required=True)
-
+        parser.add_argument('-m', '--metric',
+                            type=str,
+                            help='metrics type (e.g. performance_metrics_by_appliance, space_metrics_by_appliance, performance_metrics_by_file_system...',
+                            required=True)
         args = parser.parse_args()
 
     except KeyboardInterrupt:
@@ -54,6 +57,7 @@ def get_argument():
     password = args.password
     port = args.port
     interval = args.interval
+    metric = args.metric
     DEBUG = args.verbose
 
 
@@ -62,7 +66,7 @@ def main():
     """Main entry point"""
 
     get_argument()
-    exporter = Exporter(interval, hostname, user, password)
+    exporter = Exporter(interval, hostname, user, password, metric)
     start_http_server(port)
     exporter.run_metrics_loop()
 
