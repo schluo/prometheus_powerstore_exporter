@@ -3,7 +3,7 @@
 Prometheus Exporter for Dell EMC PowerStore Systems  
 
 ### Usage
-    usage: powerstore_exporter.py [-h] -H HOSTNAME -u USERNAME -p PASSWORD -o PORT [-v] -i INTERVAL
+    usage: powerstore_exporter.py [-h] -H HOSTNAME -u USERNAME -p PASSWORD -o PORT [-v] -i INTERVAL -m METRIC
 
     optional arguments:
         -h, --help                          show this help message and exit
