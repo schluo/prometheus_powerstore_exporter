@@ -13,14 +13,14 @@ class Exporter:
     powerstore metrics into Prometheus metrics.
     """
 
-    def __init__(self, polling_interval, hostname, user, password):
+    def __init__(self, polling_interval, hostname, user, password, metric):
 
         self.polling_interval = polling_interval
 
         self.powerstore = PowerStore(hostname=hostname,
                                      user=user,
                                      password=password,
-                                     perfstats_type="appliance")
+                                     perfstats_type=metric)
 
         self.powerstore.send_request_stats()
         self.powerstore.process_stats()
