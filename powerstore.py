@@ -6,11 +6,11 @@ class PowerStore:
 
     # This class permit to connect of the PowerStore's API
 
-    def __init__(self, hostname, user, password, perfstats_type):
+    def __init__(self, hostname, user, password, metric):
         self.hostname = hostname
         self.user = user
         self.password = password
-        self.perfstats_type = perfstats_type
+        self.metric = metric
 
     def send_request_stats(self):
         # send a request and get the result as dict
@@ -36,7 +36,7 @@ class PowerStore:
             url = 'https://' + self.hostname + '/api/rest/metrics/generate'
             r = requests.post(url, verify=False, auth=(self.user, self.password),
                               headers={"DELL-EMC-TOKEN": powerstore_token},
-                              json={"entity": self.perfstats_type, "entity_id": "A1",
+                              json={"entity": self.metric, "entity_id": "A1",
                                     "interval": "Five_Mins"})
 
             # if DEBUG:
