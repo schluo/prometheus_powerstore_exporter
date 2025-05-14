@@ -12,3 +12,4 @@ services:
       - PASSWORD=password
       - PORT=9006
       - INTERVAL=20
+      - METRIC=performance_metrics_by_appliance
