@@ -7,3 +7,8 @@ service:
     ports:
       - 9002:9006
     environment:
+      - ARRAY=10.10.10.10
+      - USER=admin
+      - PASSWORD=password
+      - PORT=9006
+      - INTERVAL=10
