@@ -20,7 +20,7 @@ class Exporter:
         self.powerstore = PowerStore(hostname=hostname,
                                      user=user,
                                      password=password,
-                                     perfstats_type=metric)
+                                     metric=metric)
 
         self.powerstore.send_request_stats()
         self.powerstore.process_stats()
