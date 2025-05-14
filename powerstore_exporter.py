@@ -51,7 +51,7 @@ def get_argument():
         # handle keyboard interrupt #
         return 0
 
-    global hostname, user, password, port, interval, DEBUG
+    global hostname, user, password, port, interval, metric, DEBUG
     hostname = args.hostname
     user = args.username
     password = args.password
