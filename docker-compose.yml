@@ -1,4 +1,4 @@
-service:
+services:
   powerstore_exporter:
     image: schluo/powerstore_exporter:latest
     container_name: powerstore_exporter
